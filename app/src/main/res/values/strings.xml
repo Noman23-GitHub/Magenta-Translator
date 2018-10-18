@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Magenta Translator</string>
+    <string name="navigation_drawer_open" />
+    <string name="navigation_drawer_close" />
+
+    <string name="activity_main_title">Переводчик</string>
+    <string name="activity_history_title">История</string>
+    <string name="activity_save_title">Сохраненные</string>
+    <string name="activity_about_title">Автор</string>
+
+    <string name="toolbar_recent">Недавние</string>
+
+    <string-array name="langs">
+        <item>Русский</item>
+        <item>Английский</item>
+        <item>Немецкий</item>
+        <item>Испанский</item>
+    </string-array>
+
+</resources>

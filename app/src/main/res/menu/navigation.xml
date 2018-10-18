@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigate_main"
+        android:title="@string/activity_main_title"
+        android:icon="@drawable/icon_translation_52px" />
+    <!-- FIXME Иконка искории визуально меньше получается надо бы исправить -->
+    <item
+        android:id="@+id/navigate_history"
+        android:title="@string/activity_history_title"
+        android:icon="@drawable/icon_history_60px" />
+    <item
+        android:id="@+id/navigate_saved"
+        android:title="@string/activity_save_title"
+        android:icon="@drawable/icon_saved_52px" />
+    <item
+        android:id="@+id/navigate_about"
+        android:title="@string/activity_about_title"
+        android:icon="@drawable/icon_about_48px" />
+</menu>
