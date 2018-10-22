@@ -25,12 +25,24 @@ public interface TranslatesDao {
     @Query("SELECT * FROM TranslateRecord")
     List<TranslateRecord> getAll();
 
-    @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.saveType & " + TYPE_HISTORY)
+    @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.saveType & " + TYPE_HISTORY + "=" + TYPE_HISTORY + " ORDER BY id DESC")
     List<TranslateRecord> getHistory();
 
-    @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.saveType & " + TYPE_SAVED)
+    @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.saveType & " + TYPE_SAVED + " = " + TYPE_SAVED + " ORDER BY id DESC")
     List<TranslateRecord> getSaved();
 
     @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.text = :text and tr.lang = :lang")
     TranslateRecord findRecord(String text, String lang);
+
+    @Query("SELECT * FROM TranslateRecord AS tr WHERE tr.id = :id")
+    TranslateRecord findRecordById(long id);
+
+    @Query("UPDATE TranslateRecord SET saveType = ((:flag | (SELECT saveType FROM TranslateRecord WHERE id=:id)) - (:flag & (SELECT saveType FROM TranslateRecord WHERE id=:id))) WHERE id=:id")
+    void toggleFlag(long id, int flag);
+
+    @Query("UPDATE TranslateRecord SET saveType = :flag | (SELECT saveType FROM TranslateRecord WHERE id=:id) WHERE id=:id")
+    void setFlag(long id, int flag);
+
+    @Query("UPDATE TranslateRecord SET saveType = ~:flag & (SELECT saveType FROM TranslateRecord WHERE id=:id) WHERE id=:id")
+    void removeFlag(long id, int flag);
 }

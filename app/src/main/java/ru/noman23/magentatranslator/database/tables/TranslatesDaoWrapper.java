@@ -38,6 +38,10 @@ public class TranslatesDaoWrapper extends TranslatesDao_Impl {
         return convertRecord(super.findRecord(text, lang));
     }
 
+    public TranslateEntity findEntityById(long id) {
+        return convertRecord(super.findRecordById(id));
+    }
+
     public List<TranslateEntity> getAllEnts() {
         return convertLists(super.getAll());
     }
@@ -54,6 +58,8 @@ public class TranslatesDaoWrapper extends TranslatesDao_Impl {
         if (record == null) return null;
         TranslateEntity entity = gson.fromJson(record.getJson(), TranslateEntity.class);
         entity.setId(record.getId());
+        entity.setText(record.getText());
+        entity.setLang(record.getLang());
         entity.setSaveType(record.getSaveType());
         return entity;
     }

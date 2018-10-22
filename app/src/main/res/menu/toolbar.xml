@@ -5,6 +5,6 @@
         android:id="@+id/action_right"
         app:showAsAction="ifRoom"
         android:orderInCategory="300"
-        android:icon="@drawable/icon_recent_60px"
+        android:icon="@drawable/icon_recent_white_24px"
         android:title="@string/toolbar_recent" />
 </menu>

@@ -1,4 +1,4 @@
-package ru.noman23.magentatranslator.ui.TranslatesRecyclerViewAdapter;
+package ru.noman23.magentatranslator.ui.TranslatesRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +20,7 @@ class TranslateViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.to) TextView mToTextView;
     @BindView(R.id.spoiler) RelativeLayout mSpoilerView;
     @BindView(R.id.spoiler_container) LinearLayout mSpoilerContainerView;
+    @BindView(R.id.lang_direction) TextView mLangDirectionTextView;
 
     private boolean mIsViewExpanded = false;
 
@@ -30,7 +31,7 @@ class TranslateViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.list_item)
     void onSpoilerClick(final View view) {
-        // TODO сделать ValueAnimator чтобы красивый экспанд/коллапс сделать
+        // TODO сделать ValueAnimator чтобы красивый кастомный экспанд/коллапс сделать
         if (!mIsViewExpanded) {
             mSpoilerView.setVisibility(View.VISIBLE);
             mSpoilerView.setEnabled(true);
@@ -44,5 +45,9 @@ class TranslateViewHolder extends RecyclerView.ViewHolder {
 
     public void setTranslateEntity(TranslateEntity translateEntity) {
         this.translateEntity = translateEntity;
+    }
+
+    public TranslateEntity getTranslateEntity() {
+        return translateEntity;
     }
 }

@@ -11,10 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/activity_main_title"
-            android:launchMode="singleInstance">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,5 +25,9 @@
         <activity
             android:name=".activities.SavedActivity"
             android:label="@string/activity_save_title" />
+
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/activity_about_title" />
     </application>
 </manifest>

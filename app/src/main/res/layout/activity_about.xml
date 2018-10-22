@@ -11,19 +11,29 @@
 
         <include layout="@layout/include_toolbar" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
-            android:background="@color/activity_history_background"
+            android:background="@color/activity_about_background"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <!-- TODO Было бы неплохо сделать джастифаед текст (выравание по ширине)-->
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/activity_about_text"
+                android:textSize="18sp" />
+        </ScrollView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:src="@drawable/please" />
     </RelativeLayout>
 
     <include layout="@layout/include_navview_start" />

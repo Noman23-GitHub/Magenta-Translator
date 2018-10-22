@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/fragment_nav_header"
+    android:fitsSystemWindows="false"
+    app:headerLayout="@layout/view_nav_header"
+    android:background="@color/navigation_background"
     app:menu="@menu/navigation" />

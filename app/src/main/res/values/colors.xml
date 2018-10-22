@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#f50057</color>
-    <color name="colorPrimaryDark">#bb002f</color>
-    <color name="colorPrimaryLight">#ff5983</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#8c9eff</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#eeeeee</color>
+
+    <color name="white">#fff</color>
+
+    <color name="item_red">#b71c1c</color>
+    <color name="item_green">#1b5e20</color>
+
+    <color name="item_recent_background">#e0e0e0</color>
+    <color name="item_recent_text">#444</color>
+
+    <color name="item_main_background">#222</color>
+    <color name="item_main_text">@color/colorAccent</color>
+    <color name="item_main_spoiler_background">#333</color>
+
+    <color name="toolbar_background">#222</color>
+
+    <color name="navigation_background">#444</color>
+    <color name="navigation_end_title">@color/colorAccent</color>
+    <color name="navigation_start_header_text">#fff</color>
+    <color name="navigation_start_header_text_shadow">#000</color>
+
+    <color name="activity_main_background">#111</color>
+    <color name="activity_main_button">#222</color>
+    <color name="activity_main_edit">#333</color>
+
+    <color name="activity_history_background">#111</color>
+
+    <color name="activity_about_background">#111</color>
+
 </resources>

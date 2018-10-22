@@ -1,21 +1,18 @@
 package ru.noman23.magentatranslator;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
-import java.util.LinkedList;
-
 import javax.inject.Inject;
 
+import ru.noman23.magentatranslator.activities.MainActivity;
 import ru.noman23.magentatranslator.database.tables.TranslatesDaoWrapper;
 import ru.noman23.magentatranslator.network.YandexDictionaryApi;
 import ru.noman23.magentatranslator.network.translate.TranslateEntity;
-import ru.noman23.magentatranslator.ui.TranslatesRecyclerViewAdapter.TranslateRecyclerAdapter;
+import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateRecyclerViewAdapter;
 
 import static ru.noman23.magentatranslator.database.tables.TranslatesDao.TYPE_HISTORY;
 
@@ -23,9 +20,9 @@ public class TranslateAsyncTask extends AsyncTask<Void, Void, TranslateEntity> {
 
     // TODO ТУТ СОВСЕМ БАРДАК, надо все переделать
 
-    // FIXME field leaks заменить это все на RxAndroid
-    private Activity activity;
-    private RecyclerView resultView;
+    // FIXME field leaks
+    private MainActivity activity;
+    private TranslateRecyclerViewAdapter adapter;
 
     private String text;
     private String lang;
@@ -34,12 +31,12 @@ public class TranslateAsyncTask extends AsyncTask<Void, Void, TranslateEntity> {
     @Inject YandexDictionaryApi yaApi;
     @Inject Gson gson;
 
-    public TranslateAsyncTask(Activity activity, RecyclerView resultView, String text, String lang) {
+    public TranslateAsyncTask(MainActivity activity, TranslateRecyclerViewAdapter adapter, String text, String lang) {
         DaggerMagentaComponent.builder().context(activity).build().inject(this);
         this.activity = activity;
         this.text = text;
         this.lang = lang;
-        this.resultView = resultView;
+        this.adapter = adapter;
     }
 
     private ProgressDialog progress;
@@ -48,9 +45,8 @@ public class TranslateAsyncTask extends AsyncTask<Void, Void, TranslateEntity> {
     protected void onPreExecute() {
         super.onPreExecute();
         progress = new ProgressDialog(activity);
-        // TODO В строковые ресурсы
-        progress.setTitle("Загрузка");
-        progress.setMessage("Пожалуйста подождите...");
+        progress.setTitle(activity.getString(R.string.dialog_progress_title));
+        progress.setMessage(activity.getString(R.string.dialog_progress_message));
         progress.setCancelable(false);
         progress.show();
     }
@@ -72,9 +68,10 @@ public class TranslateAsyncTask extends AsyncTask<Void, Void, TranslateEntity> {
             }
             return result;
         } catch (Exception e) {
-            Snackbar.make(resultView, "Ошибка. " + e.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(activity.findViewById(R.id.recycler_view), activity.getString(R.string.snackbar_error) + ". " + e.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+        // FIXME Плохой костыль, нужно по-человечески сделать
         TranslateEntity error = new TranslateEntity();
         error.setId(-1);
         return error;
@@ -85,13 +82,12 @@ public class TranslateAsyncTask extends AsyncTask<Void, Void, TranslateEntity> {
         super.onPostExecute(result);
         progress.dismiss();
         if (result != null && result.getId() != -1) {
-            Snackbar.make(resultView, "Завершено", Snackbar.LENGTH_SHORT).show();
-            resultView.setAdapter(new TranslateRecyclerAdapter(new LinkedList<TranslateEntity>() {{
-                add(result);
-            }}));
+            Snackbar.make(activity.findViewById(R.id.recycler_view), R.string.snackbar_completed, Snackbar.LENGTH_SHORT).show();
+            adapter.clear();
+            adapter.addItem(result);
+            activity.loadRecent();
         } else if (result == null) {
-            // TODO: Вывести хардкодед строку в стрковые ресурсы
-            Snackbar.make(resultView, "Результат не найден", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(activity.findViewById(R.id.recycler_view), R.string.snackbar_not_found, Snackbar.LENGTH_SHORT).show();
         }
     }
 }

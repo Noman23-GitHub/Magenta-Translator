@@ -4,11 +4,31 @@
     <string name="navigation_drawer_close" />
 
     <string name="activity_main_title">Переводчик</string>
+    <string name="activity_main_hint">Введите слово или фразу</string>
+    <string name="activity_main_translate">Перевести</string>
+
     <string name="activity_history_title">История</string>
     <string name="activity_save_title">Сохраненные</string>
+
     <string name="activity_about_title">Автор</string>
+    <string name="activity_about_text">\t\tВсем привет.\n\n\t\tМеня зовут Никита и я недоволен. Приложение несложное, но мне захотелось в нем отразить свои навыки и использовать разные технологии с которыми я пока мало работал, но крайне хотел научиться. Из-за этого получилось, то что получилось)\n\t\tИдеи накладывались одна на другую и получилось так, что я сломал архитектуру, которую планировал построить, а после этого ее уже было не спасти. Этот винегрет кода на самом деле местами выглядит неплохо. Если подогнать под человеческую архитектуру, то это все вопросы бы решило. Запилить какой-нибудь биндинг для рецайклов. Нормальные отдельные таблицы для истории, сохраненных и кеша. И т.п. В общем как-то так.\n\t\tЯ пытался сделать круто, а получилось как всегда :D</string>
 
     <string name="toolbar_recent">Недавние</string>
+    <string name="navigation_end_title">Недавно переведенные:</string>
+
+    <string name="snackbar_history_error">Ошибка загрузки истории.</string>
+    <string name="snackbar_saved_error">Ошибка загрузки сохраненных.</string>
+    <string name="snackbar_action_cancel">Отмена</string>
+    <string name="snackbar_swipe_delete">Удалено.</string>
+    <string name="snackbar_swipe_save">Сохранено.</string>
+    <string name="snackbar_not_found">Результат не найден</string>
+    <string name="snackbar_completed">Завершено</string>
+    <string name="snackbar_error">Ошибка</string>
+
+    <string name="dialog_progress_title">Выполняется запрос</string>
+    <string name="dialog_progress_message">Пожалуйста подождите…</string>
+
+    <string name="item_separator"><![CDATA[->]]></string>
 
     <string-array name="langs">
         <item>Русский</item>

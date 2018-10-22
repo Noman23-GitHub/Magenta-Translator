@@ -3,13 +3,27 @@
     android:id="@+id/list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="#f8bbd0">
+        android:layout_height="@dimen/item_main_height"
+        android:background="@color/item_main_background">
+
+        <TextView
+            android:id="@+id/lang_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="2dp"
+            android:text="ru-en"
+            android:textColor="@color/item_main_text"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,8 +35,7 @@
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Русское слово"
-                android:textColor="#444"
+                android:textColor="@color/item_main_text"
                 android:textSize="18sp" />
 
             <TextView
@@ -30,15 +43,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="->"
-                android:textSize="18sp" />
+                android:text="@string/item_separator"
+                android:textColor="@color/item_main_text"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="English word"
-                android:textColor="#444"
+                android:textColor="@color/item_main_text"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -48,15 +61,15 @@
         android:id="@+id/spoiler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="#d7ccc8">
+        android:background="@color/item_main_spoiler_background"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/spoiler_container"
             android:layout_width="match_parent"
-            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:padding="10dp" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="end"
-    android:fitsSystemWindows="true">
+    android:background="@color/navigation_background"
+    android:fitsSystemWindows="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,20 +13,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Недавно переведенные: "
-            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/navigation_end_title"
             android:textAlignment="center"
-            android:textColor="#444" />
+            android:textColor="@color/navigation_end_title"
+            android:textSize="18sp" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_slidermenu"
+            android:id="@+id/recent_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#424242" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

@@ -8,11 +8,12 @@
     <item
         android:id="@+id/navigate_history"
         android:title="@string/activity_history_title"
-        android:icon="@drawable/icon_history_60px" />
-    <item
+        android:icon="@drawable/icon_history_49px" />
+    <!-- FIXME (TAG: Save) -->
+    <!--item
         android:id="@+id/navigate_saved"
         android:title="@string/activity_save_title"
-        android:icon="@drawable/icon_saved_52px" />
+        android:icon="@drawable/icon_saved_52px" /-->
     <item
         android:id="@+id/navigate_about"
         android:title="@string/activity_about_title"

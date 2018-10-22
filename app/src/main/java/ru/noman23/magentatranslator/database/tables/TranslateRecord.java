@@ -13,7 +13,7 @@ public class TranslateRecord {
     private String lang;
     private int saveType = 1;
 
-    // TODO: Думаю очевидно - нужно убрать и хранить по человечески в нереляционной бд.
+    // TODO Думаю очевидно - нужно убрать и хранить по человечески в нереляционной бд или Sh.Pr
     private String json;
 
     @Ignore
