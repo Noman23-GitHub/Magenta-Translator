@@ -10,11 +10,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.noman23.magentatranslator.R;
-import ru.noman23.magentatranslator.network.translate.TranslateEntity;
 
 class TranslateViewHolder extends RecyclerView.ViewHolder {
-
-    private TranslateEntity translateEntity;
 
     @BindView(R.id.from) TextView mFromTextView;
     @BindView(R.id.to) TextView mToTextView;
@@ -41,13 +38,5 @@ class TranslateViewHolder extends RecyclerView.ViewHolder {
             mSpoilerView.setEnabled(false);
             mIsViewExpanded = false;
         }
-    }
-
-    public void setTranslateEntity(TranslateEntity translateEntity) {
-        this.translateEntity = translateEntity;
-    }
-
-    public TranslateEntity getTranslateEntity() {
-        return translateEntity;
     }
 }

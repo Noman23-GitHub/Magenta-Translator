@@ -62,7 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
         }).start();
     }
 
-    // TODO Не совсем уверен в целесообразности выноса бизнес логики без настройки внешнего вида и направлений свайпа, нужно об этом подумать
     private void onItemSwipe(RecyclerView.ViewHolder viewHolder, int direction) {
         final TranslateEntity swipedItem = mRecyclerAdapter.getTranslateEntities().get(viewHolder.getAdapterPosition());
         final int swipedIndex = viewHolder.getAdapterPosition();

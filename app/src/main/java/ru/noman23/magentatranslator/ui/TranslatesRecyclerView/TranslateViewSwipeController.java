@@ -86,8 +86,11 @@ public class TranslateViewSwipeController extends Callback {
         }
     }
 
+    // TODO Не совсем уверен в целесообразности выноса бизнес логики без настройки внешнего вида и направлений свайпа, нужно об этом подумать
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        mOnSwipeListener.onSwiped(viewHolder, direction);
+        if (mOnSwipeListener != null) {
+            mOnSwipeListener.onSwiped(viewHolder, direction);
+        }
     }
 }

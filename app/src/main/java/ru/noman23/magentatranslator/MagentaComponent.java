@@ -12,7 +12,6 @@ import ru.noman23.magentatranslator.activities.MainActivity;
 import ru.noman23.magentatranslator.activities.SavedActivity;
 import ru.noman23.magentatranslator.database.DatabaseModule;
 import ru.noman23.magentatranslator.network.NetworkModule;
-import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateViewSwipeController;
 import ru.noman23.magentatranslator.ui.UIModule;
 import ru.noman23.magentatranslator.utils.UtilsModule;
 
@@ -29,8 +28,6 @@ public interface MagentaComponent {
     }
 
     // TODO Можно через Application синглтоном предоставить компонент для вызова, но @Inject мне больше нравится. Нужно подумать.
-    void inject(TranslateViewSwipeController translateViewSwipeController);
-
     void inject(TranslateAsyncTask translateAsyncTask);
 
     void inject(MainActivity mainActivity);
