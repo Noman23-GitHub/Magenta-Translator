@@ -45,7 +45,7 @@ public class SavedActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TranslateViewSwipeController(this, mRecyclerAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TranslateViewSwipeController(this, null));
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         new Thread(() -> {
