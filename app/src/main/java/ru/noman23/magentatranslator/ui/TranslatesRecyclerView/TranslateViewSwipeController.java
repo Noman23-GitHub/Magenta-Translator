@@ -1,21 +1,24 @@
 package ru.noman23.magentatranslator.ui.TranslatesRecyclerView;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import javax.inject.Inject;
 
+import butterknife.BindColor;
+import butterknife.BindDimen;
+import butterknife.BindDrawable;
+import butterknife.ButterKnife;
 import ru.noman23.magentatranslator.DaggerMagentaComponent;
 import ru.noman23.magentatranslator.R;
 import ru.noman23.magentatranslator.activities.MainActivity;
@@ -24,10 +27,21 @@ import ru.noman23.magentatranslator.database.tables.TranslatesDaoWrapper;
 import ru.noman23.magentatranslator.network.translate.TranslateEntity;
 
 import static android.support.v7.widget.helper.ItemTouchHelper.LEFT;
+import static android.support.v7.widget.helper.ItemTouchHelper.RIGHT;
 
 public class TranslateViewSwipeController extends Callback {
 
     // TODO Тут бардак, нужно прибрать, укомплектовать код отрисовки задников, onSwipe тоже облагородить
+
+    @BindDimen(R.dimen.item_main_swipe_icon_size) int mIconSize;
+    @BindDimen(R.dimen.item_main_swipe_icon_margin) int mIconMargin;
+
+    @BindColor(R.color.item_green) int mGreenColor;
+    @BindColor(R.color.item_red) int mRedColor;
+    @BindColor(R.color.white) int mWhiteColor;
+
+    @BindDrawable(R.drawable.icon_save_96px) Drawable mSaveDrawable;
+    @BindDrawable(R.drawable.icon_delete_96px) Drawable mDeleteDrawable;
 
     @Inject TranslatesDaoWrapper mDatabase;
 
@@ -36,6 +50,7 @@ public class TranslateViewSwipeController extends Callback {
 
     public TranslateViewSwipeController(Activity activity, TranslateRecyclerViewAdapter adapter) {
         DaggerMagentaComponent.builder().context(activity).build().inject(this);
+        ButterKnife.bind(this, activity);
         this.mActivity = activity;
         this.mAdapter = adapter;
     }
@@ -46,7 +61,7 @@ public class TranslateViewSwipeController extends Callback {
         if (mActivity instanceof MainActivity)
             return makeMovementFlags(0, 0);
         // FIXME (TAG: Save) Убран флаг свайпа для сейва RIGHT
-        return makeMovementFlags(0, LEFT);
+        return makeMovementFlags(0, LEFT | RIGHT);
     }
 
     @Override
@@ -54,64 +69,36 @@ public class TranslateViewSwipeController extends Callback {
         return false;
     }
 
-    public static final float ALPHA_FULL = 1.0f;
-
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
 
             View itemView = viewHolder.itemView;
             Paint p = new Paint();
-            Bitmap icon;
 
             if (dX > 0) {
-                //color : left side (swiping towards right)
-                p.setColor(ContextCompat.getColor(recyclerView.getContext(), R.color.item_green));
-                c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
-                        (float) itemView.getBottom(), p);
+                p.setColor(mGreenColor);
+                c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom(), p);
 
-                //icon : left side (swiping towards right)
-                //icon = BitmapFactory.decodeResource(mActivity.getApplicationContext().getResources(), R.drawable.icon_save_96px);
+                mSaveDrawable.setBounds(itemView.getLeft() + mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getLeft() + mIconMargin + mIconSize, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
+                mSaveDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
+                mSaveDrawable.draw(c);
 
-
-                Drawable drawable = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.icon_save_96px);
-                //drawable = DrawableCompat.wrap(drawable).mutate();
-                //drawable.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(recyclerView.getContext(), R.color.white),
-                //        PorterDuff.Mode.SRC_IN));
-                drawable.draw(c);
-
-                /*c.drawBitmap(icon,
-                        (float) itemView.getLeft() + convertDpToPx(16),
-                        (float) itemView.getTop() + ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight()) / 2,
-                        p);*/
             } else {
+                p.setColor(mRedColor);
+                c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom(), p);
 
-                //color : right side (swiping towards left)
-                //p.setARGB(255, 255, 0, 0);
-                p.setColor(ContextCompat.getColor(recyclerView.getContext(), R.color.item_red));
+                mDeleteDrawable.setBounds(itemView.getRight() - mIconSize - mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getRight() - mIconMargin, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
+                mDeleteDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
+                mDeleteDrawable.draw(c);
 
-                c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
-                        (float) itemView.getRight(), (float) itemView.getBottom(), p);
-
-                /*icon = BitmapFactory.decodeResource(mActivity.getApplicationContext().getResources(), R.drawable.icon_delete_96px);
-                c.drawBitmap(icon,
-                        (float) itemView.getRight() - convertDpToPx(16) - icon.getWidth(),
-                        (float) itemView.getTop() + ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight()) / 2,
-                        p);*/
             }
 
-            // Fade out the view when it is swiped out of the parent
-            final float alpha = ALPHA_FULL - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
-            viewHolder.itemView.setAlpha(alpha);
             viewHolder.itemView.setTranslationX(dX);
 
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
-    }
-
-    private int convertDpToPx(int dp) {
-        return Math.round(dp * (mActivity.getResources().getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     @Override
