@@ -1,7 +1,10 @@
 package ru.noman23.magentatranslator.ui.TranslatesRecyclerView;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,15 +31,37 @@ class TranslateViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.list_item)
     void onSpoilerClick(final View view) {
-        // TODO сделать ValueAnimator чтобы красивый кастомный экспанд/коллапс сделать
+        View spoilerView = view.findViewById(R.id.spoiler);
+        int widthSpec = View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY);
+        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        spoilerView.measure(widthSpec, heightSpec);
+        int spoilerViewHeight = spoilerView.getMeasuredHeight();
+
+        ValueAnimator valueAnimator;
         if (!mIsViewExpanded) {
+            valueAnimator = ValueAnimator.ofInt(view.getHeight(), view.getHeight() + spoilerViewHeight);
             mSpoilerView.setVisibility(View.VISIBLE);
             mSpoilerView.setEnabled(true);
             mIsViewExpanded = true;
         } else {
-            mSpoilerView.setVisibility(View.GONE);
+            valueAnimator = ValueAnimator.ofInt(view.getHeight(), view.getHeight() - spoilerViewHeight);
+            valueAnimator.addListener(new DefaultAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mSpoilerView.setVisibility(View.GONE);
+                }
+            });
             mSpoilerView.setEnabled(false);
             mIsViewExpanded = false;
         }
+
+        valueAnimator.setDuration(200);
+        valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        valueAnimator.addUpdateListener(animation -> {
+            view.getLayoutParams().height = (Integer) animation.getAnimatedValue();
+            view.requestLayout();
+        });
+
+        valueAnimator.start();
     }
 }
