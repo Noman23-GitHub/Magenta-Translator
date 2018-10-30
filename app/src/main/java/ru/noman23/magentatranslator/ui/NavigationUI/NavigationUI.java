@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.noman23.magentatranslator.R;
-import ru.noman23.magentatranslator.activities.AboutActivity;
-import ru.noman23.magentatranslator.activities.HistoryActivity;
-import ru.noman23.magentatranslator.activities.MainActivity;
+import ru.noman23.magentatranslator.activities.about.AboutActivity;
+import ru.noman23.magentatranslator.activities.history.HistoryActivity;
+import ru.noman23.magentatranslator.activities.main.MainActivity;
 
 public class NavigationUI {
 

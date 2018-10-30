@@ -13,41 +13,53 @@ import android.view.View;
 
 import butterknife.BindColor;
 import butterknife.BindDimen;
-import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import ru.noman23.magentatranslator.R;
-import ru.noman23.magentatranslator.activities.MainActivity;
 
 import static android.support.v7.widget.helper.ItemTouchHelper.LEFT;
+import static android.support.v7.widget.helper.ItemTouchHelper.RIGHT;
 
 public class TranslateViewSwipeController extends Callback {
 
     @BindDimen(R.dimen.item_main_swipe_icon_size) int mIconSize;
     @BindDimen(R.dimen.item_main_swipe_icon_margin) int mIconMargin;
 
-    @BindColor(R.color.item_green) int mGreenColor;
-    @BindColor(R.color.item_red) int mRedColor;
     @BindColor(R.color.white) int mWhiteColor;
-
-    @BindDrawable(R.drawable.icon_save_96px) Drawable mSaveDrawable;
-    @BindDrawable(R.drawable.icon_delete_96px) Drawable mDeleteDrawable;
 
     private Activity mActivity;
     private OnSwipeListener mOnSwipeListener;
 
-    public TranslateViewSwipeController(Activity activity, OnSwipeListener onSwipeListener) {
+    private int mSwipeFlags;
+    private int mSwipeDirections;
+
+    private int mLeftColor;
+    private int mRightColor;
+
+    private Drawable mLeftDrawable;
+    private Drawable mRightDrawable;
+
+    public TranslateViewSwipeController(Activity activity,
+                                        OnSwipeListener onSwipeListener,
+                                        int swipeFlags,
+                                        int swipeDirections,
+                                        int leftColor,
+                                        int rightColor,
+                                        Drawable leftDrawable,
+                                        Drawable rightDrawable) {
         ButterKnife.bind(this, activity);
         this.mActivity = activity;
         this.mOnSwipeListener = onSwipeListener;
+        this.mSwipeFlags = swipeFlags;
+        this.mSwipeDirections = swipeDirections;
+        this.mLeftColor = leftColor;
+        this.mRightColor = rightColor;
+        this.mLeftDrawable = leftDrawable;
+        this.mRightDrawable = rightDrawable;
     }
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        // FIXME Костыль чтобы элемент не свайпался на майн активити
-        if (mActivity instanceof MainActivity)
-            return makeMovementFlags(0, 0);
-        // FIXME (TAG: Save) Убран флаг свайпа для сейва RIGHT
-        return makeMovementFlags(0, LEFT);
+        return makeMovementFlags(mSwipeFlags, mSwipeDirections);
     }
 
     @Override
@@ -63,30 +75,35 @@ public class TranslateViewSwipeController extends Callback {
             Paint p = new Paint();
 
             if (dX > 0) {
-                p.setColor(mGreenColor);
-                c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom(), p);
+                if ((mSwipeDirections & RIGHT) != 0) {
+                    p.setColor(mRightColor);
+                    c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom(), p);
 
-                mSaveDrawable.setBounds(itemView.getLeft() + mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getLeft() + mIconMargin + mIconSize, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
-                mSaveDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
-                mSaveDrawable.draw(c);
-
+                    if (mRightDrawable != null) {
+                        mRightDrawable.setBounds(itemView.getLeft() + mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getLeft() + mIconMargin + mIconSize, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
+                        mRightDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
+                        mRightDrawable.draw(c);
+                    }
+                }
             } else {
-                p.setColor(mRedColor);
-                c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom(), p);
+                if ((mSwipeDirections & LEFT) != 0) {
+                    p.setColor(mLeftColor);
+                    c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom(), p);
 
-                mDeleteDrawable.setBounds(itemView.getRight() - mIconSize - mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getRight() - mIconMargin, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
-                mDeleteDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
-                mDeleteDrawable.draw(c);
+                    if (mLeftDrawable != null) {
+                        mLeftDrawable.setBounds(itemView.getRight() - mIconSize - mIconMargin, itemView.getTop() + (itemView.getBottom() - itemView.getTop() - mIconSize) / 2, itemView.getRight() - mIconMargin, itemView.getBottom() - (itemView.getBottom() - itemView.getTop() - mIconSize) / 2);
+                        mLeftDrawable.setColorFilter(new PorterDuffColorFilter(mWhiteColor, PorterDuff.Mode.SRC_IN));
+                        mLeftDrawable.draw(c);
+                    }
+                }
             }
 
             viewHolder.itemView.setTranslationX(dX);
-
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     }
 
-    // TODO Не совсем уверен в целесообразности выноса бизнес логики без настройки внешнего вида и направлений свайпа, нужно об этом подумать
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         if (mOnSwipeListener != null) {

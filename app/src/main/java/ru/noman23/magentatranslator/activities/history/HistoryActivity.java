@@ -1,4 +1,4 @@
-package ru.noman23.magentatranslator.activities;
+package ru.noman23.magentatranslator.activities.history;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -47,7 +47,11 @@ public class HistoryActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        TranslateViewSwipeController swipeController = new TranslateViewSwipeController(this, this::onItemSwipe);
+
+
+        TranslateViewSwipeController swipeController =
+                new HistorySwipeConfigurator(this, this::onItemSwipe).getController();
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 

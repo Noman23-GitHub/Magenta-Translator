@@ -1,4 +1,4 @@
-package ru.noman23.magentatranslator;
+package ru.noman23.magentatranslator.activities.main;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -8,7 +8,8 @@ import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
-import ru.noman23.magentatranslator.activities.MainActivity;
+import ru.noman23.magentatranslator.DaggerMagentaComponent;
+import ru.noman23.magentatranslator.R;
 import ru.noman23.magentatranslator.database.tables.TranslatesDaoWrapper;
 import ru.noman23.magentatranslator.network.YandexDictionaryApi;
 import ru.noman23.magentatranslator.network.translate.TranslateEntity;

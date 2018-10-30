@@ -1,4 +1,4 @@
-package ru.noman23.magentatranslator.activities;
+package ru.noman23.magentatranslator.activities.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -25,13 +25,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.noman23.magentatranslator.DaggerMagentaComponent;
 import ru.noman23.magentatranslator.R;
-import ru.noman23.magentatranslator.TranslateAsyncTask;
 import ru.noman23.magentatranslator.database.tables.TranslatesDaoWrapper;
 import ru.noman23.magentatranslator.network.translate.TranslateEntity;
 import ru.noman23.magentatranslator.ui.NavigationUI.NavigationUI;
 import ru.noman23.magentatranslator.ui.RecentRecyclerView.RecentRecyclerViewAdapter;
 import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateRecyclerViewAdapter;
-import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateViewSwipeController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private RecentRecyclerViewAdapter mRecentRecyclerAdapter = new RecentRecyclerViewAdapter(history);
 
     // TODO Добавить сохранение выбранного направления перевода в Sh.Pr
+    // TODO Сделать чтобы сохранялся последний перевод при onConfigurationChanged
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DaggerMagentaComponent.builder().context(this).build().inject(this);
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TranslateViewSwipeController(this, null));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MainSwipeConfigurator(this, null).getController());
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         mRecentRecyclerView.setLayoutManager(new LinearLayoutManager(this));

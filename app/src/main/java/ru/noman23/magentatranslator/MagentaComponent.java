@@ -6,10 +6,11 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import ru.noman23.magentatranslator.activities.AboutActivity;
-import ru.noman23.magentatranslator.activities.HistoryActivity;
-import ru.noman23.magentatranslator.activities.MainActivity;
-import ru.noman23.magentatranslator.activities.SavedActivity;
+import ru.noman23.magentatranslator.activities.about.AboutActivity;
+import ru.noman23.magentatranslator.activities.history.HistoryActivity;
+import ru.noman23.magentatranslator.activities.main.MainActivity;
+import ru.noman23.magentatranslator.activities.main.TranslateAsyncTask;
+import ru.noman23.magentatranslator.activities.saved.SavedActivity;
 import ru.noman23.magentatranslator.database.DatabaseModule;
 import ru.noman23.magentatranslator.network.NetworkModule;
 import ru.noman23.magentatranslator.ui.UIModule;

@@ -1,4 +1,4 @@
-package ru.noman23.magentatranslator.activities;
+package ru.noman23.magentatranslator.activities.saved;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -20,7 +20,6 @@ import ru.noman23.magentatranslator.database.tables.TranslatesDaoWrapper;
 import ru.noman23.magentatranslator.network.translate.TranslateEntity;
 import ru.noman23.magentatranslator.ui.NavigationUI.NavigationUI;
 import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateRecyclerViewAdapter;
-import ru.noman23.magentatranslator.ui.TranslatesRecyclerView.TranslateViewSwipeController;
 
 
 // FIXME (TAG: Save) ВСЕ ОЧЕНЬ ПЛОХО Нужно все переделывать, не успеваю. Все что касается этой активити закомменчино (TAG: Save)
@@ -45,7 +44,7 @@ public class SavedActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TranslateViewSwipeController(this, null));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SaveSwipeConfigurator(this, null).getController());
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         new Thread(() -> {
